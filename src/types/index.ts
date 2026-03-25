@@ -26,7 +26,7 @@ export interface AddTask {
 }
 export interface TaskList {
   item: {
-    id: string;
+    id: string | number;
     taskName: string;
     completed: boolean;
   };
@@ -51,7 +51,7 @@ export interface Todo {
   newTask: () => void;
 }
 export interface Task {
-  id: string;
+  id: string | number;
   taskName: string;
   completed: boolean;
 }

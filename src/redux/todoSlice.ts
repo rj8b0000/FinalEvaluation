@@ -1,21 +1,28 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Task } from '../types';
+
+interface TodoState {
+  tasks: Task[];
+}
+
+const initialState: TodoState = {
+  tasks: [],
+};
 
 const todoSlice = createSlice({
   name: 'todo',
-  initialState: {
-    tasks: [],
-  },
+  initialState,
   reducers: {
-    addTaskToList: (state, action) => {
+    addTaskToList: (state, action: PayloadAction<Task>) => {
       state.tasks.push(action.payload);
     },
-    toggleTask: (state, action) => {
+    toggleTask: (state, action: PayloadAction<string | number>) => {
       const task = state.tasks.find(t => t.id === action.payload);
       if (task) {
         task.completed = !task.completed;
       }
     },
-    removeTask: (state, action) => {
+    removeTask: (state, action: PayloadAction<{ id: string | number }>) => {
       state.tasks = state.tasks.filter(task => task.id !== action.payload.id);
     },
   },

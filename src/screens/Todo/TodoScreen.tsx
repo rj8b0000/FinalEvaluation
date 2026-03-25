@@ -63,7 +63,7 @@ const TodoScreen = () => {
         {tasks.length > 0 ? (
           <FlatList
             data={filteredTasks}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.id.toString()}
             renderItem={item => {
               return <TaskList item={item} isDarkMode={isDarkMode} />;
             }}
