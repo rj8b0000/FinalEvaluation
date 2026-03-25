@@ -21,20 +21,15 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { GlobalStyles } from '../../theme/styles';
 import { login } from '../../services/auth';
-import { Radius, Spacing, Typography } from '../../theme';
-
-const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid Email').required('Email is required'),
-  password: Yup.string()
-    .min(6, 'Password must be of minimum 6 charaters')
-    .required('Password is required'),
-});
+import { Colors, Radius, Spacing, Typography } from '../../theme';
+import { LoginSchema } from './validaton/loginValidation';
+import { useLogin } from './hooks/useLogin';
 const LoginScreen = (): JSX.Element => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
   type LoginScreenNavigationProp = NativeStackNavigationProp<
     RootStackParamList,
     'Login'
   >;
+  const { showPassword, togglePassword, handleLogin } = useLogin();
   const navigation = useNavigation<LoginScreenNavigationProp>();
   return (
     <SafeAreaView style={GlobalStyles.container}>
@@ -48,50 +43,7 @@ const LoginScreen = (): JSX.Element => {
             password: '',
           }}
           validationSchema={LoginSchema}
-          onSubmit={async (values, { resetForm }) => {
-            try {
-              await login(values.email, values.password).then(() => {
-                resetForm();
-              });
-            } catch (error: any) {
-              const errorCode = error.code;
-              const errorMessage = error.message;
-              // Handle specific error codes
-              switch (errorCode) {
-                case 'auth/user-not-found':
-                  // Display a message that the email is not registered
-                  Alert.alert('User not found for this email address.');
-                  break;
-                case 'auth/wrong-password':
-                  // Prompt the user for the correct password
-                  Alert.alert('Incorrect password. Please try again.');
-                  break;
-                case 'auth/invalid-credential':
-                  // Prompt the user for the correct password
-                  Alert.alert('Incorrect password. Please try again.');
-                  break;
-                case 'auth/invalid-email':
-                  // Inform the user that the email address format is invalid
-                  Alert.alert('The email address is not valid.');
-                  break;
-                case 'auth/user-disabled':
-                  // Inform the user their account has been disabled
-                  Alert.alert(
-                    'Your account has been disabled by an administrator.',
-                  );
-                  break;
-                case 'auth/too-many-requests':
-                  // Inform the user to try again later, or implement CAPTCHA
-                  Alert.alert(
-                    'Too many login attempts. Please try again later or use CAPTCHA verification.',
-                  );
-                  break;
-                // Handle other common errors
-                default:
-                  Alert.alert(`Login failed: ${errorMessage}`);
-              }
-            }
-          }}
+          onSubmit={(values, { resetForm }) => handleLogin(values, resetForm)}
         >
           {({
             handleChange,
@@ -137,9 +89,7 @@ const LoginScreen = (): JSX.Element => {
                       secureTextEntry={showPassword ? false : true}
                     />
                   </TouchableWithoutFeedback>
-                  <TouchableOpacity
-                    onPress={() => setShowPassword(!showPassword)}
-                  >
+                  <TouchableOpacity onPress={togglePassword}>
                     <AntDesign
                       name={showPassword ? 'eye' : 'eye-invisible'}
                       size={20}
@@ -180,7 +130,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   txtInput: {
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: Colors.black,
     padding: Spacing.sm,
     width: '100%',
     borderRadius: Radius.md,
@@ -194,7 +144,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   errorText: {
-    color: 'red',
+    color: Colors.red,
     marginTop: '1%',
   },
   labelTxt: {
@@ -206,10 +156,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: Spacing.md,
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingRight: 10,
+    paddingRight: Spacing.sm,
   },
   titleContainer: {
     flexDirection: 'row',
@@ -220,11 +170,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   addPostText: {
-    fontSize: 18,
+    ...Typography.buttonText,
     fontWeight: '600',
-    color: '#fff',
-    backgroundColor: '#000',
-    padding: '2%',
+    color: Colors.white,
+    backgroundColor: Colors.black,
+    padding: Spacing.sm,
     textAlign: 'center',
     borderRadius: 12,
   },

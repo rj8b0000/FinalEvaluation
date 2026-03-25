@@ -13,10 +13,7 @@ import { Colors } from '../../theme';
 import type { Task, Todo } from '../../types';
 import { useTodoLogic } from './hooks/useTodoLogic';
 
-interface TodoScreenComponentProp {
-  item: Todo;
-}
-const TodoScreen: React.FC<TodoScreenComponentProp> = () => {
+const TodoScreen = () => {
   const tasks = useSelector((state: any) => state.todo.tasks);
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
 

@@ -19,7 +19,8 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { logout } from '../../services/auth';
 import { GlobalStyles } from '../../theme/styles';
-import { Radius, Spacing, Typography } from '../../theme';
+import { Colors, Radius, Spacing, Typography } from '../../theme';
+import { moderateScale } from 'react-native-size-matters';
 
 const SettingsScreen = () => {
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -92,7 +93,7 @@ const SettingsScreen = () => {
                 />
               ) : (
                 <View style={styles.placeholderContainer}>
-                  <MaterialIcons name="camera-alt" size={40} color="#666" />
+                  <MaterialIcons name="camera-alt" size={moderateScale(40)} color={Colors.placeholder} />
                 </View>
               )}
             </TouchableOpacity>
@@ -101,6 +102,7 @@ const SettingsScreen = () => {
               <Text style={styles.labelTxt}>Name</Text>
               <TextInput
                 placeholder="Enter Name"
+                placeholderTextColor={Colors.placeholder}
                 value={name}
                 onChangeText={setName}
                 style={styles.txtInput}
@@ -110,6 +112,7 @@ const SettingsScreen = () => {
               <Text style={styles.labelTxt}>Email</Text>
               <TextInput
                 placeholder="Enter Email"
+                placeholderTextColor={Colors.placeholder}
                 value={email}
                 onChangeText={setEmail}
                 style={styles.txtInput}
@@ -121,6 +124,7 @@ const SettingsScreen = () => {
               <View style={styles.passInput}>
                 <TextInput
                   placeholder="Enter Password"
+                  placeholderTextColor={Colors.placeholder}
                   value={password}
                   onChangeText={setPassword}
                   style={[styles.txtInput, { width: '90%', borderWidth: 0 }]}
@@ -129,7 +133,8 @@ const SettingsScreen = () => {
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                   <AntDesign
                     name={showPassword ? 'eye' : 'eye-invisible'}
-                    size={20}
+                    size={moderateScale(20)}
+                    color={Colors.black}
                   />
                 </TouchableOpacity>
               </View>
@@ -168,66 +173,70 @@ const styles = StyleSheet.create({
   title: {
     ...Typography.title,
     fontWeight: 'bold',
+    color: Colors.black,
   },
   imagePickerContainer: {
     alignSelf: 'center',
     marginBottom: Spacing.md,
   },
   profileImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: moderateScale(120),
+    height: moderateScale(120),
+    borderRadius: moderateScale(60),
   },
   placeholderContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: '#e0e0e0',
+    width: moderateScale(120),
+    height: moderateScale(120),
+    borderRadius: moderateScale(60),
+    backgroundColor: Colors.lightGrey,
     justifyContent: 'center',
     alignItems: 'center',
   },
   formContainer: {
     width: '100%',
-    marginTop: '5%',
+    marginTop: Spacing.md,
   },
   txtInput: {
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: Colors.black,
     padding: Spacing.sm,
     width: '100%',
     borderRadius: Radius.md,
+    color: Colors.black,
   },
   labelTxt: {
     ...Typography.label,
     fontWeight: '600',
-    marginVertical: '2%',
+    marginVertical: Spacing.xs,
+    color: Colors.body,
   },
   passInput: {
     flexDirection: 'row',
     width: '100%',
     borderWidth: 1,
-    borderRadius: 10,
+    borderColor: Colors.black,
+    borderRadius: Radius.md,
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingRight: 10,
+    paddingRight: Spacing.sm,
   },
   saveButton: {
-    backgroundColor: '#000',
-    padding: '3.5%',
-    borderRadius: 12,
+    backgroundColor: Colors.black,
+    padding: Spacing.sm,
+    borderRadius: Radius.md,
     marginTop: Spacing.sm,
     alignItems: 'center',
   },
   logoutButton: {
-    backgroundColor: '#eb4d4b',
-    padding: '3.5%',
-    borderRadius: 12,
+    backgroundColor: Colors.red,
+    padding: Spacing.sm,
+    borderRadius: Radius.md,
     marginTop: Spacing.sm,
     alignItems: 'center',
   },
   buttonText: {
-    fontSize: 18,
+    ...Typography.buttonText,
     fontWeight: '600',
-    color: '#fff',
+    color: Colors.white,
   },
 });

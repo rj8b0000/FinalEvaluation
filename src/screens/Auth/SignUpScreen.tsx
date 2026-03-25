@@ -11,38 +11,30 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, { JSX, useState } from 'react';
+import React, { JSX } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
 import AntDesign from '@react-native-vector-icons/ant-design';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigator/types';
 import { GlobalStyles } from '../../theme/styles';
-import { signUp } from '../../services/auth';
-import { Radius, Spacing, Typography } from '../../theme';
-
-const SignUpSchema = Yup.object().shape({
-  fullname: Yup.string().required('Full name is required'),
-  email: Yup.string().email('Invalid Email').required('Email is required'),
-  password: Yup.string()
-    .min(6, 'Password must be of minimum 6 charaters')
-    .required('Password is required'),
-  conformPassword: Yup.string().oneOf(
-    [Yup.ref('password')],
-    'Passwords must match',
-  ),
-});
+import { Colors, Radius, Spacing, Typography } from '../../theme';
+import { useSignUp } from './hooks/useSignUp';
+import { SignUpSchema } from './validaton/signUpValidation';
 const SignUpScreen = (): JSX.Element => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConformPassword, setShowConformPassword] =
-    useState<boolean>(false);
   type SignUpScreenNavigationProp = NativeStackNavigationProp<
     RootStackParamList,
     'SignUp'
   >;
   const navigation = useNavigation<SignUpScreenNavigationProp>();
+  const {
+    showPassword,
+    showConformPassword,
+    togglePassword,
+    toggleConfirmPassword,
+    handleSignUp,
+  } = useSignUp();
 
   return (
     <SafeAreaView style={GlobalStyles.container}>
@@ -58,52 +50,7 @@ const SignUpScreen = (): JSX.Element => {
             conformPassword: '',
           }}
           validationSchema={SignUpSchema}
-          onSubmit={async (values, { resetForm }) => {
-            try {
-              const user = await signUp(values.email, values.password).then(
-                () => {
-                  resetForm();
-                },
-              );
-            } catch (error: any) {
-              const errorCode = error.code;
-              const errorMessage = error.message;
-              // Handle specific error codes
-              switch (errorCode) {
-                case 'auth/user-not-found':
-                  // Display a message that the email is not registered
-                  Alert.alert('User not found for this email address.');
-                  break;
-                case 'auth/wrong-password':
-                  // Prompt the user for the correct password
-                  Alert.alert('Incorrect password. Please try again.');
-                  break;
-                case 'auth/invalid-credential':
-                  // Prompt the user for the correct password
-                  Alert.alert('Incorrect password. Please try again.');
-                  break;
-                case 'auth/invalid-email':
-                  // Inform the user that the email address format is invalid
-                  Alert.alert('The email address is not valid.');
-                  break;
-                case 'auth/user-disabled':
-                  // Inform the user their account has been disabled
-                  Alert.alert(
-                    'Your account has been disabled by an administrator.',
-                  );
-                  break;
-                case 'auth/too-many-requests':
-                  // Inform the user to try again later, or implement CAPTCHA
-                  Alert.alert(
-                    'Too many login attempts. Please try again later or use CAPTCHA verification.',
-                  );
-                  break;
-                // Handle other common errors
-                default:
-                  Alert.alert(`Sign up failed: ${errorMessage}`);
-              }
-            }
-          }}
+          onSubmit={(values, { resetForm }) => handleSignUp(values, resetForm)}
         >
           {({
             handleChange,
@@ -167,9 +114,7 @@ const SignUpScreen = (): JSX.Element => {
                       secureTextEntry={showPassword ? false : true}
                     />
                   </TouchableWithoutFeedback>
-                  <TouchableOpacity
-                    onPress={() => setShowPassword(!showPassword)}
-                  >
+                  <TouchableOpacity onPress={togglePassword}>
                     <AntDesign
                       name={showPassword ? 'eye' : 'eye-invisible'}
                       size={20}
@@ -196,9 +141,7 @@ const SignUpScreen = (): JSX.Element => {
                       secureTextEntry={showConformPassword ? false : true}
                     />
                   </TouchableWithoutFeedback>
-                  <TouchableOpacity
-                    onPress={() => setShowConformPassword(!showConformPassword)}
-                  >
+                  <TouchableOpacity onPress={toggleConfirmPassword}>
                     <AntDesign
                       name={showConformPassword ? 'eye' : 'eye-invisible'}
                       size={20}
@@ -254,7 +197,7 @@ const styles = StyleSheet.create({
   },
   txtInput: {
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: Colors.black,
     padding: Spacing.sm,
     width: '100%',
     borderRadius: Radius.md,
@@ -273,13 +216,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: '5%',
   },
-  infoHeading: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  infoText: {
-    fontSize: 16,
-  },
   errorText: {
     color: 'red',
     marginTop: '1%',
@@ -293,18 +229,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: Spacing.md,
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingRight: 10,
+    paddingRight: Spacing.sm,
   },
   addPostText: {
-    fontSize: 18,
+    ...Typography.buttonText,
     fontWeight: '600',
-    color: '#fff',
-    backgroundColor: '#000',
-    padding: '2%',
+    color: Colors.white,
+    backgroundColor: Colors.black,
+    padding: Spacing.sm,
     textAlign: 'center',
-    borderRadius: 12,
+    borderRadius: Radius.md,
   },
 });
