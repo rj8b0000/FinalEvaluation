@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1064127758007",
+    "project_id": "finalevaluation-9f4c1",
+    "storage_bucket": "finalevaluation-9f4c1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064127758007:android:c8fc90d9064f9e9ae79732",
+        "android_client_info": {
+          "package_name": "com.finalevaluation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcGyxE2zV1oX1MwzBDvDtAyON9r1O_ccs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
