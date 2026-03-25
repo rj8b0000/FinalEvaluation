@@ -18,4 +18,8 @@ export const GlobalStyles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
 });
