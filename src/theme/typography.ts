@@ -10,6 +10,8 @@ const makeTextStyle = (fontSize: number) => ({
 export const Typography = {
   title: makeTextStyle(20),
   label: makeTextStyle(16),
+  buttonText: makeTextStyle(14),
+  actionButtonText: makeTextStyle(12),
 };
 
 export default Typography;

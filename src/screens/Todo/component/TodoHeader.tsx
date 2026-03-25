@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import AntDesign from '@react-native-vector-icons/ant-design';
 import { GlobalStyles } from '../../../theme/styles';
-import { Spacing } from '../../../theme';
+import { Colors, Spacing } from '../../../theme';
 import type { TodoHeader as TodoHeaderProps } from '../../../types';
 
 const TodoHeader: React.FC<TodoHeaderProps> = ({
@@ -15,7 +15,7 @@ const TodoHeader: React.FC<TodoHeaderProps> = ({
       <Text
         style={[
           GlobalStyles.headerTitle,
-          { color: isDarkMode ? '#fff' : '#000' },
+          { color: isDarkMode ? Colors.white : Colors.black },
         ]}
       >
         Todo App
@@ -25,14 +25,14 @@ const TodoHeader: React.FC<TodoHeaderProps> = ({
           <AntDesign
             name={isDarkMode ? 'sun' : 'moon'}
             size={24}
-            color={isDarkMode ? '#f4a244' : '#000'}
+            color={isDarkMode ? Colors.yellow : Colors.black}
           />
         </TouchableOpacity>
         <TouchableOpacity onPress={toggleModal}>
           <AntDesign
             name="more"
             size={24}
-            color={isDarkMode ? '#fff' : '#000'}
+            color={isDarkMode ? Colors.white : Colors.black}
           />
         </TouchableOpacity>
       </View>

@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import type { AddTaskBtn as AddTaskBtnProps } from '../../../types';
+import { Colors, Spacing, Typography } from '../../../theme';
 
 const AddTaskBtn: React.FC<AddTaskBtnProps> = ({ onPressAction }) => {
   return (
@@ -16,12 +17,12 @@ const styles = StyleSheet.create({
   addTaskButton: {
     padding: '4%',
     marginTop: '6%',
-    borderRadius: 10,
-    backgroundColor: '#686de0',
+    borderRadius: Spacing.md,
+    backgroundColor: Colors.blue,
   },
   buttonText: {
-    fontSize: 16,
+    ...Typography.buttonText,
     fontWeight: 'bold',
-    color: '#fff',
+    color: Colors.white,
   },
 });

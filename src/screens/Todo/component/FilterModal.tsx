@@ -4,6 +4,7 @@ import { RadioGroup } from 'react-native-radio-buttons-group';
 import { GlobalStyles } from '../../../theme/styles';
 import Modal from 'react-native-modal';
 import type { FilterModal as FilterModalProps } from '../../../types';
+import { Colors, Spacing, Typography } from '../../../theme';
 
 const FilterModal: React.FC<FilterModalProps> = ({
   isModalVisible,
@@ -34,15 +35,15 @@ export default FilterModal;
 const styles = StyleSheet.create({
   modalContent: {
     height: '23%',
-    backgroundColor: '#fff',
-    borderRadius: 10,
+    backgroundColor: Colors.white,
+    borderRadius: Spacing.md,
     padding: '4%',
   },
   filterContainer: {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: '100%',
-    marginTop: 10,
+    marginTop: Spacing.md,
   },
   radioGroupContainer: {
     justifyContent: 'flex-start',

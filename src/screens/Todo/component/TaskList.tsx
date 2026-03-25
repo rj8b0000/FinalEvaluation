@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleTask, removeTask } from '../../../redux/todoSlice';
+import { Colors, Spacing, Typography } from '../../../theme';
 
 const TaskList = ({ item, isDarkMode }: { item: any; isDarkMode: boolean }) => {
   const dispatch = useDispatch();
@@ -15,9 +16,9 @@ const TaskList = ({ item, isDarkMode }: { item: any; isDarkMode: boolean }) => {
             textDecorationLine: item.item.completed ? 'line-through' : 'none',
           },
           {
-            color: isDarkMode ? '#fff' : '#000',
+            color: isDarkMode ? Colors.white : Colors.black,
             borderWidth: 1,
-            borderColor: isDarkMode ? '#fff' : '#000',
+            borderColor: isDarkMode ? Colors.white : Colors.black,
           },
         ]}
       >
@@ -27,7 +28,9 @@ const TaskList = ({ item, isDarkMode }: { item: any; isDarkMode: boolean }) => {
         style={[
           styles.baseActionButton,
           {
-            backgroundColor: item.item.completed ? '#95afc0' : '#30336b',
+            backgroundColor: item.item.completed
+              ? Colors.lightBlue
+              : Colors.darkBlue,
           },
         ]}
         onPress={() => dispatch(toggleTask(item.item.id))}
@@ -52,13 +55,13 @@ const styles = StyleSheet.create({
   addTaskButton: {
     padding: '4%',
     marginTop: '6%',
-    borderRadius: 10,
-    backgroundColor: '#686de0',
+    borderRadius: Spacing.md,
+    backgroundColor: Colors.blue,
   },
   buttonText: {
-    fontSize: 16,
+    ...Typography.buttonText,
     fontWeight: 'bold',
-    color: '#fff',
+    color: Colors.white,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -68,22 +71,22 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: Spacing.md,
     paddingHorizontal: '4%',
     width: '58%',
   },
   saveButton: {
     padding: '2%',
-    borderRadius: 10,
-    backgroundColor: '#6ab04c',
+    borderRadius: Spacing.md,
+    backgroundColor: Colors.green,
     width: '18%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   cancelButton: {
     padding: '2%',
-    borderRadius: 10,
-    backgroundColor: '#eb4d4b',
+    borderRadius: Spacing.md,
+    backgroundColor: Colors.red,
     width: '18%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -95,21 +98,21 @@ const styles = StyleSheet.create({
     paddingVertical: '4%',
   },
   taskText: {
-    fontSize: 18,
-    borderRadius: 10,
+    ...Typography.buttonText,
+    borderRadius: Spacing.md,
     padding: '2%',
     width: '58%',
   },
   baseActionButton: {
     padding: '2%',
-    borderRadius: 10,
+    borderRadius: Spacing.md,
     width: '18%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   actionButtonText: {
-    fontSize: 14,
+    ...Typography.actionButtonText,
     fontWeight: 'bold',
-    color: '#fff',
+    color: Colors.white,
   },
 });

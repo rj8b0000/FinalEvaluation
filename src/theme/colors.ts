@@ -12,5 +12,11 @@ export const Colors = {
   white: '#ffffff',
   bannerGray: '#E7EAEF',
   lightGrey: '#f1f1f1',
+  green: '#6ab04c',
+  red: '#eb4d4b',
+  blue: '#686de0',
+  lightBlue: '#95afc0',
+  darkBlue: '#30336b',
+  yellow: '#f4a244',
 };
 export default Colors;

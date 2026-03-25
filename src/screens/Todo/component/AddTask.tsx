@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import type { AddTask as AddTaskProps } from '../../../types';
+import { Colors, Spacing, Typography } from '../../../theme';
 
 const AddTask: React.FC<AddTaskProps> = ({
   onPressAction,
@@ -21,13 +22,14 @@ const AddTask: React.FC<AddTaskProps> = ({
         style={[
           styles.input,
           {
-            borderColor: isDarkMode ? '#fff' : '#000',
-            color: isDarkMode ? '#fff' : '#000',
+            borderColor: isDarkMode ? Colors.white : Colors.black,
+            color: isDarkMode ? Colors.white : Colors.black,
           },
         ]}
         value={text}
         onChangeText={setText}
         placeholder="Enter the Task"
+        placeholderTextColor={isDarkMode ? Colors.white : Colors.black}
       />
       <TouchableOpacity style={styles.saveButton} onPress={newTask}>
         <Text style={styles.buttonText}>Save</Text>
@@ -50,29 +52,29 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: Spacing.md,
     paddingHorizontal: '4%',
     width: '58%',
   },
   saveButton: {
     padding: '2%',
-    borderRadius: 10,
-    backgroundColor: '#6ab04c',
+    borderRadius: Spacing.md,
+    backgroundColor: Colors.green,
     width: '18%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   cancelButton: {
     padding: '2%',
-    borderRadius: 10,
-    backgroundColor: '#eb4d4b',
+    borderRadius: Spacing.md,
+    backgroundColor: Colors.red,
     width: '18%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
-    fontSize: 16,
+    ...Typography.buttonText,
     fontWeight: 'bold',
-    color: '#fff',
+    color: Colors.white,
   },
 });
